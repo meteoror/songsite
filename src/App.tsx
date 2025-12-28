@@ -42,6 +42,10 @@ export default function App() {
 
   return (
     <div className="container-fluid vh-100 d-flex">
+      <div className="alert alert-danger" role="alert">
+        <h4 className="alert-heading">notice!!</h4>
+        <p>if you somehow got here due to seo being kind to me, this website is heavily unfinished currently, sorry. talk to me on discord @91ninevolt instead!</p>
+      </div>
       {/* LEFT PANEL */}
       <div className="song-list p-3">
         {songs.map((song) => (
