@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { songs, Song } from "./songs";
+import { songs, type Song } from "./songs";
 
 export default function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
