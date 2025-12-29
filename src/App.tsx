@@ -8,29 +8,32 @@ export default function App() {
   const player = useAudioPlayer(songs[0]);
 
   return (
-    <div className="container-fluid vh-100 d-flex">
+    <div>
       <div className="alert alert-danger">
         <h4 className="alert-heading">notice!!</h4>
         <p>unfinished site warning</p>
       </div>
+      
+      <div className="container-fluid vh-100 d-flex">
+        <SongList
+          songs={songs}
+          currentSong={player.currentSong}
+          onSelect={player.setCurrentSong}
+        />
 
-      <SongList
-        songs={songs}
-        currentSong={player.currentSong}
-        onSelect={player.setCurrentSong}
-      />
-
-      <Player
-        song={player.currentSong}
-        isPlaying={player.isPlaying}
-        progress={player.progress}
-        togglePlay={player.togglePlay}
-        skip={player.skip}
-        seek={player.seek}
-        audioRef={player.audioRef}
-        onTimeUpdate={player.onTimeUpdate}
-        onEnded={() => player.setIsPlaying(false)}
-      />
+        <Player
+          song={player.currentSong}
+          isPlaying={player.isPlaying}
+          progress={player.progress}
+          togglePlay={player.togglePlay}
+          skip={player.skip}
+          seek={player.seek}
+          audioRef={player.audioRef}
+          onTimeUpdate={player.onTimeUpdate}
+          onEnded={() => player.setIsPlaying(false)}
+        />
+      </div>
     </div>
+
   );
 }
