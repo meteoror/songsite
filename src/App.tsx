@@ -12,7 +12,8 @@ export default function App() {
       <div style={{ flex: 1 }}>
         <div className="alert alert-danger h-100 mb-0">
           <h4 className="alert-heading">notice!!</h4>
-          <p>unfinished site warning</p>
+          <p>if you somehow got here due to seo being kind to me, this website is heavily unfinished currently, sorry.</p>
+          <p>talk to me on discord @91ninevolt instead!</p>
         </div>
       </div>
 
