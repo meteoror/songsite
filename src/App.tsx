@@ -8,13 +8,15 @@ export default function App() {
   const player = useAudioPlayer(songs[0]);
 
   return (
-    <div className="p-3">
-      <div className="alert alert-danger">
-        <h4 className="alert-heading">notice!!</h4>
-        <p>unfinished site warning</p>
+    <div className="vh-100 d-flex flex-column p-3">
+      <div style={{ flex: 1 }}>
+        <div className="alert alert-danger h-100 mb-0">
+          <h4 className="alert-heading">notice!!</h4>
+          <p>unfinished site warning</p>
+        </div>
       </div>
 
-      <div className="container-fluid vh-100 d-flex">
+      <div style={{ flex: 9 }} className="d-flex">
         <SongList
           songs={songs}
           currentSong={player.currentSong}
@@ -34,6 +36,5 @@ export default function App() {
         />
       </div>
     </div>
-
   );
 }
