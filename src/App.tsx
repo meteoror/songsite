@@ -8,12 +8,12 @@ export default function App() {
   const player = useAudioPlayer(songs[0]);
 
   return (
-    <div>
+    <div className="p-3">
       <div className="alert alert-danger">
         <h4 className="alert-heading">notice!!</h4>
         <p>unfinished site warning</p>
       </div>
-      
+
       <div className="container-fluid vh-100 d-flex">
         <SongList
           songs={songs}
