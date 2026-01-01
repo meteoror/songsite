@@ -30,7 +30,7 @@ export default function App() {
         </div>
 
         {/* Player */}
-        <div className="player-container-wrapper">
+        <div className="flex-md-grow-1 overflow-hidden d-flex align-items-center justify-content-center">
           <Player
             song={player.currentSong}
             isPlaying={player.isPlaying}
