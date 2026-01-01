@@ -13,6 +13,7 @@ export default function App() {
       <div className="flex-shrink-0">
         <div className="alert alert-danger mb-3">
           <p>no album covers im So Sorry use your imagination</p>
+          <p>also, the audio may take a few moments to load!! sorry!!</p>
         </div>
       </div>
 
