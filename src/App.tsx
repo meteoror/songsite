@@ -1,40 +1,41 @@
+// import React from 'react';
 import { songs } from "./songs";
 import { SongList } from "./SongList";
 import { Player } from "./Player";
 import { useAudioPlayer } from "./useAudioPlayer";
-import { ProgressBar } from "./Bar";
+import { Bar } from "./Bar";
+import { Alert } from "./Alert";
 
 export default function App() {
   const player = useAudioPlayer(songs[0]);
 
   return (
     <div className="vh-100 d-flex flex-column p-3">
-      {/* notice */}
+      {/* Alert */}
       <div className="flex-shrink-0">
-        <div className="alert alert-danger mb-3">
-          <p>no album covers im So Sorry use your imagination</p>
-          <p>also, the audio may take a few moments to load!! sorry!!</p>
-        </div>
+        <Alert />
       </div>
 
-      {/* main */}
-      <div className="flex-grow-1 d-flex flex-column flex-md-row overflow-hidden">
-        <div className="flex-md-grow-1 overflow-auto">
-          <SongList
-            songs={songs}
-            currentSong={player.currentSong}
-            onSelect={player.setCurrentSong}
-          />
+      {/* Main content */}
+      <div className="flex-grow-1 d-flex flex-column flex-md-row overflow-hidden gap-3">
+        {/* Song List */}
+        <div className="flex-md-grow-1 overflow-hidden d-flex flex-column">
+          <div className="overflow-auto flex-grow-1">
+            <SongList
+              songs={songs}
+              currentSong={player.currentSong}
+              onSelect={player.setCurrentSong}
+            />
+          </div>
         </div>
 
-        <div className="flex-grow-1 d-flex align-items-center justify-content-center">
+        {/* Player */}
+        <div className="flex-md-grow-1 overflow-hidden d-flex align-items-center justify-content-center">
           <Player
             song={player.currentSong}
             isPlaying={player.isPlaying}
-            progress={player.progress}
             togglePlay={player.togglePlay}
             skip={player.skip}
-            seek={player.seek}
             audioRef={player.audioRef}
             onTimeUpdate={player.onTimeUpdate}
             onEnded={() => player.setIsPlaying(false)}
@@ -42,14 +43,13 @@ export default function App() {
         </div>
       </div>
 
-      {/* bar */}
-      <div className="mt-3 mb-2 px-2">
-        <ProgressBar
+      {/* Progress Bar */}
+      <div className="flex-shrink-0 mt-3">
+        <Bar
           progress={player.progress}
           onSeek={player.seek}
         />
       </div>
     </div>
-
   );
 }

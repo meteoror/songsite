@@ -1,85 +1,387 @@
-body {
-  background: #0e0e0e;
-  color: #eaeaea;
+:root {
+  --primary-bg: #0a0a0a;
+  --secondary-bg: #111111;
+  --card-bg: #151515;
+  
+  --text-primary: #f0f0f0;
+  --text-secondary: #888888;
+  
+  --accent-green: #00ff88;
+  --accent-green-hover: #00cc6a;
+  --accent-green-glow: rgba(0, 255, 136, 0.3);
+  
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Base Styles */
+body {
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+}
+
+.vh-100 {
+  min-height: 100vh;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 4px;
+  transition: background 0.3s var(--transition-smooth);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green-hover);
+  box-shadow: 0 0 10px var(--accent-green-glow);
+}
+
+/* Alert */
+.alert {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(10, 10, 10, 0.9) 100%);
+  border: 1px solid var(--accent-green);
+  color: var(--accent-green);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 255, 136, 0.1);
+  border-left: 4px solid var(--accent-green);
+}
+
+.alert p {
+  margin-bottom: 0.25rem;
+}
+
+/* Song List */
 .song-list {
-  width: 320px;
+  width: 100%;
+  max-width: 400px;
   overflow-y: auto;
   border-right: 1px solid #222;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.9) 0%, rgba(15, 15, 15, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 20px !important;
 }
 
 .song-row {
   position: relative;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.25s ease;
+  background: var(--card-bg);
+  border: 1px solid transparent;
+  transition: all 0.3s var(--transition-smooth);
+  transform-origin: center left;
+  overflow: hidden;
 }
 
 .song-row:hover {
-  background: #1a1a1a;
+  background: linear-gradient(135deg, #1a1a1a 0%, #202020 100%);
+  border-color: rgba(0, 255, 136, 0.1);
+  transform: translateX(8px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 255, 136, 0.1);
 }
 
 .song-row.active {
-  background: #202020;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, var(--card-bg) 100%);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(0, 255, 136, 0.2),
+    0 0 40px rgba(0, 255, 136, 0.1);
+}
+
+.song-row.active span {
+  color: var(--accent-green);
+  font-weight: 600;
 }
 
 .timeline {
   height: 4px;
   background: #333;
-  margin-top: 6px;
+  margin-top: 8px;
   border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 255, 136, 0.2) 50%, 
+    transparent 100%);
+  animation: timelineShine 3s infinite linear;
+}
+
+@keyframes timelineShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .timeline-fill {
   height: 100%;
-  width: 0%;
-  background: #aaa;
+  background: linear-gradient(90deg, var(--accent-green) 0%, #00cc6a 100%);
+  border-radius: 2px;
+  transition: width 0.3s var(--transition-smooth);
+  box-shadow: 0 0 10px var(--accent-green-glow);
 }
 
 .play-hover {
   position: absolute;
-  right: 12px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0;
   filter: blur(4px);
-  transition: opacity 0.25s ease, filter 0.25s ease;
+  transition: all 0.3s var(--transition-smooth);
+  background: var(--accent-green);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.play-hover i {
+  font-size: 0.8rem;
 }
 
 .song-row:hover .play-hover {
   opacity: 1;
   filter: blur(0);
+  transform: translateY(-50%) scale(1.1);
 }
 
+/* Player */
 .player-view {
   overflow: hidden;
+  position: relative;
+}
+
+.player-view::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, 
+    rgba(0, 255, 136, 0.05) 0%, 
+    transparent 70%);
+  z-index: -1;
 }
 
 .cover {
-  width: 280px;
-  border-radius: 12px;
+  width: 320px;
+  height: 320px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(0, 255, 136, 0.1),
+    0 0 60px rgba(0, 255, 136, 0.15);
+  transition: all 0.4s var(--transition-smooth);
+}
+
+.cover:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.9),
+    0 0 0 2px rgba(0, 255, 136, 0.2),
+    0 0 100px rgba(0, 255, 136, 0.25);
+}
+
+.player-view h2 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.player-view h5 {
+  color: var(--accent-green) !important;
+  font-weight: 500;
+}
+
+.player-view p {
+  color: var(--text-secondary);
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .controls button {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  margin: 0 10px;
-  color: #eaeaea;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  font-size: 1.8rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
+.controls button:hover {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  transform: scale(1.1);
+  box-shadow: 
+    0 10px 30px rgba(0, 255, 136, 0.3),
+    0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+.controls button:nth-child(2) {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--accent-green) 0%, #00cc6a 100%);
+  color: #000;
+  font-weight: bold;
+}
+
+.controls button:nth-child(2):hover {
+  background: linear-gradient(135deg, var(--accent-green-hover) 0%, #00b359 100%);
+  transform: scale(1.15);
+  box-shadow: 
+    0 15px 40px rgba(0, 255, 136, 0.4),
+    0 0 50px rgba(0, 255, 136, 0.3);
+}
+
+/* Progress Bar */
 .progress-bar {
   height: 6px;
-  background: #333;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--transition-smooth);
 }
 
-.progress-bar div {
+.progress-bar:hover {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 255, 136, 0.1) 50%, 
+    transparent 100%);
+  animation: progressShine 2s infinite linear;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-fill {
   height: 100%;
-  background: #eaeaea;
+  background: linear-gradient(90deg, var(--accent-green) 0%, #00ffaa 100%);
+  border-radius: 3px;
   transition: width 0.1s linear;
+  position: relative;
+  box-shadow: 
+    0 0 20px var(--accent-green-glow),
+    0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--accent-green);
+  opacity: 0;
+  transition: opacity 0.3s var(--transition-smooth);
+}
+
+.progress-bar:hover .progress-fill::after {
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .song-list {
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #222;
+    max-height: 40vh;
+  }
+  
+  .cover {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .controls button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .controls button:nth-child(2) {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .player-view {
+    padding: 2rem 1rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .cover {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .controls {
+    gap: 16px;
+  }
 }
